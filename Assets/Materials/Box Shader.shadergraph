@@ -1,5 +1,12 @@
 {
-    "m_SerializedProperties": [],
+    "m_SerializedProperties": [
+        {
+            "typeInfo": {
+                "fullName": "UnityEditor.ShaderGraph.Vector2ShaderProperty"
+            },
+            "JSONnodeData": "{\n    \"m_Name\": \"Vector2\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"570f2a52-2dd1-4a81-8c40-dd594f5509a9\"\n    },\n    \"m_DefaultReferenceName\": \"Vector2_D37545C9\",\n    \"m_OverrideReferenceName\": \"\",\n    \"m_Value\": {\n        \"x\": 0.0,\n        \"y\": 0.0,\n        \"z\": 0.0,\n        \"w\": 0.0\n    },\n    \"m_Hidden\": false\n}"
+        }
+    ],
     "m_GUID": {
         "m_GuidSerialized": "d37d6b4e-ca38-4f8d-9df8-98461a5fd806"
     },

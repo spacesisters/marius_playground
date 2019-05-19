@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private bool isGrounded;
     private Animator anim;
+    private int shotDir;
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +44,12 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.RightControl))
         {
-            Instantiate(shot, playerCapsule.transform.position, playerCapsule.transform.rotation);
+            GameObject tmp_shot = (GameObject)Instantiate(shot, playerCapsule.transform.position, playerCapsule.transform.rotation);
+            if (tmp_shot != null)
+            {
+                tmp_shot.GetComponent<Shot>().SetDirection(shotDir);
+                //Debug.Log(shotDir);
+            }
         }
 
         /*
@@ -63,6 +69,14 @@ public class PlayerController : MonoBehaviour
         float xDirection = Input.GetAxisRaw("Horizontal");
         //float move_Y = Input.GetAxisRaw("Vertical");
 
+        if (xDirection > 0)
+        {
+            shotDir = 1;
+        }
+        else if(xDirection < 0)
+        {
+            shotDir = -1;
+        }
 
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
