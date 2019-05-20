@@ -10,10 +10,16 @@ public class PlayerController : MonoBehaviour
     public GameObject playerCapsule;
     public GameObject shot;
 
+    public float radius;
+    public float force;
+
     private Rigidbody rb;
     private bool isGrounded;
     private Animator anim;
     private int shotDir;
+
+    private bool xPressed;
+    private bool yPressed;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +55,49 @@ public class PlayerController : MonoBehaviour
             {
                 tmp_shot.GetComponent<Shot>().SetDirection(shotDir);
                 //Debug.Log(shotDir);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            yPressed = true;
+        }
+
+        else if (Input.GetKey(KeyCode.X))
+        {
+            xPressed = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Y))
+        {
+            yPressed = false;
+        }
+
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            xPressed = false;
+        }
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+        foreach (Collider col in colliders)
+        {
+            if (col.gameObject.GetComponent<Rigidbody>() != null
+                && col.gameObject.layer != 12) // check if gameobject is not a shot
+            {
+                Rigidbody rb = col.gameObject.GetComponent<Rigidbody>();
+                Vector3 forceDirection = rb.position - transform.position;
+                float distance = forceDirection.magnitude;
+                if (yPressed)
+                {
+                    Debug.Log("Y pressed");
+                    rb.AddForce(forceDirection * force * (radius - distance));
+                }
+                else if (xPressed)
+                {
+                    rb.AddForce(-forceDirection * force * (radius - distance));
+                }
+                    
+                //Debug.Log("Force Direction: " + forceDirection);
             }
         }
 
