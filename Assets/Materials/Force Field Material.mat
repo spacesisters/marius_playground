@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Force Fielld Material
+  m_Name: Force Field Material
   m_Shader: {fileID: -6465566751694194690, guid: caddace4962bdac44a69fef7baf55cbe,
     type: 3}
   m_ShaderKeywords: 
@@ -20,5 +20,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs: []
-    m_Floats: []
-    m_Colors: []
+    m_Floats:
+    - Vector1_392EF143: 5
+    - Vector1_B50A7D0C: 0.6
+    m_Colors:
+    - Color_45AE0E17: {r: 50.833168, g: 0.96104336, b: 0, a: 0}

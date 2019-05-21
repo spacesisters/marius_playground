@@ -122,3 +122,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  sfxImpact: {fileID: 8300000, guid: 1aa3495f56404a74888c96b43449a139, type: 3}

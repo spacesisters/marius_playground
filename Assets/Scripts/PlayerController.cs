@@ -14,15 +14,23 @@ public class PlayerController : MonoBehaviour
     public float maxMagnetRadius;
     public float maxMagnetForce;
 
-    private Rigidbody rb;
-    private bool isGrounded;
-    private Animator anim;
-    private int shotDir;
+    public AudioClip sfxJump;
+    public AudioClip sfxImpact;
+    public AudioClip sfxShot;
+    public AudioClip sfxForcefield;
 
+    private Rigidbody rb;
+    private Animator anim;
+    private Material mat;
+
+    private int shotDir;
     private float magnetRadius;
 
+    private bool isGrounded;
     private bool isPulling;
     private bool isPushing;
+
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +40,14 @@ public class PlayerController : MonoBehaviour
         anim = playerCapsule.GetComponent<Animator>();
         magnetRadius = 0.0f;
         forceSphere.transform.localScale = new Vector3(magnetRadius, magnetRadius, 1.5f);
+        mat = forceSphere.GetComponent<Renderer>().material;
+        audioSource = GetComponent<AudioSource>();
     }
 
+    public void playImpactSound()
+    {
+        audioSource.PlayOneShot(sfxImpact);
+    }
     
     private void OnCollisionEnter()
     {
@@ -55,10 +69,12 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
+            audioSource.PlayOneShot(sfxShot);
             GameObject tmp_shot = (GameObject)Instantiate(shot, playerCapsule.transform.position, playerCapsule.transform.rotation);
             if (tmp_shot != null)
             {
                 tmp_shot.GetComponent<Shot>().SetDirection(shotDir);
+                tmp_shot.GetComponent<Shot>().SetPlayer(this);
                 //Debug.Log(shotDir);
             }
         }
@@ -67,12 +83,13 @@ public class PlayerController : MonoBehaviour
         {
             isPushing = true;
             forceSphere.SetActive(true);
+            mat.SetVector("Color_45AE0E17", Color.red * 8f);
         }
-
         else if (Input.GetKey(KeyCode.X))
         {
             isPulling = true;
             forceSphere.SetActive(true);
+            mat.SetVector("Color_45AE0E17", Color.blue * 8f);
         }
 
         if (Input.GetKeyUp(KeyCode.Y))
@@ -87,6 +104,10 @@ public class PlayerController : MonoBehaviour
 
         if (isPushing || isPulling)
         {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
             if (magnetRadius < 7)
             {
                 magnetRadius += 0.8f;
@@ -158,6 +179,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             //Debug.Log("Jump!");
+            audioSource.PlayOneShot(sfxJump);
             rb.AddForce(new Vector3(0, jumpForce * 100.0f, 0));
         }
 

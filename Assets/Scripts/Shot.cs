@@ -7,7 +7,7 @@ public class Shot : MonoBehaviour
     public float speed;
 
     private Rigidbody rb;
-    private GameObject player;
+    private PlayerController pc;
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +21,12 @@ public class Shot : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.gameObject.tag == "Enemy")
+        pc.playImpactSound();
+        if (collision.collider.gameObject.tag == "Enemy")
         {
             Animator enemyAnim = collision.collider.gameObject.GetComponent<Animator>();
             enemyAnim.SetTrigger("die");
-            Destroy(collision.collider.gameObject, 2);
+            Destroy(collision.collider.gameObject, 1.0f);
         }
 
         //Debug.Log("Shot Collision!");
@@ -36,6 +37,11 @@ public class Shot : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.velocity = new Vector3(speed * dir, 0.0f, 0.0f);
+    }
+
+    public void SetPlayer(PlayerController player)
+    {
+        pc = player;
     }
 
     // Update is called once per frame
